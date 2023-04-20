@@ -1,3 +1,9 @@
+python_v7/data
+biocy_c/Graph.c
+biocy_c/Graph.html
+read_gfa
+kage_kmer_finder
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
