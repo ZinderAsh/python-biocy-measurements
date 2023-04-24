@@ -5,10 +5,19 @@ class Node:
         self.sequence = np.frombuffer(sequence.encode('ASCII'), dtype=np.dtype('B'))
         self.edges = np.array(edges, dtype=np.int32)
 
+    @staticmethod
+    def from_obgraph(node, sequence, edges, encoding="ACGT"):
+        char_sequence = ""
+        for i in sequence:
+            char_sequence += encoding[i]
+        edges = np.array(edges, dtype=np.int32)
+        return Node(char_sequence, edges)
+
 class Graph:
 
     def __init__(self):
         self.nodes = []
+        self.save_results = True
 
     @staticmethod
     def from_sequence_edge_lists(sequences, edges):
@@ -25,6 +34,14 @@ class Graph:
             graph.nodes.append(node)
         return graph
 
+    @staticmethod
+    def from_obgraph(obg):
+        graph = Graph()
+        for i in range(len(obg.nodes)):
+            node = Node.from_obgraph(obg.nodes[i], obg.sequences[i], obg.edges[i])
+            graph.nodes.append(node)
+        return graph
+
     def get_kmers(self, k, kmers, nodes, node_id, kmer_buf, nodes_buf,
                   kmer_len=0, nodes_len=0, rec_kmer_len=0, recurse=False):
         nodes_buf[nodes_len] = node_id
@@ -36,7 +53,7 @@ class Graph:
                     kmer_buf[i] = kmer_buf[i + 1]
             else:
                 kmer_len += 1
-            if kmer_len >= k: # full kmer collected, add to result
+            if kmer_len >= k and self.save_results: # full kmer collected, add to result
                 kmer = hash_kmer(kmer_buf[(kmer_len-k):kmer_len], k)
                 for i in range(nodes_len):
                     kmers.append(kmer)

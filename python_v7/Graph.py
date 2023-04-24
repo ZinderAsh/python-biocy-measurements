@@ -53,7 +53,7 @@ class GraphKmerFinder:
         return self.kmers, self.nodes
 
     def get_kmers_recursive(self, k, node_id, variant_cnt, path_len, kmer_len, kmer_ext_len):
-        # Update lenghts and buffers
+        # Update lengths and buffers
         self.path_buffer[path_len] = node_id
         path_len += 1
         node = self.graph.nodes[node_id]
@@ -83,16 +83,17 @@ class GraphKmerFinder:
                     kmer_ext_len = k - kmer_len - 1
                 while kmer_ext_len < sequence_len:
                     kmer_ext_len += 1
-                    # Combine the main buffer and extended buffer to form the final kmer.
-                    kmer_hash = np.bitwise_or(np.left_shift(self.kmer_buffer,
-                                                            np.uint64(kmer_ext_len * 2)),
-                                              np.right_shift(self.kmer_buffer_ext,
-                                                             np.uint64(64 - kmer_ext_len * 2)))
-                    kmer_hash = np.bitwise_and(kmer_hash, self.kmer_mask)
-                    # Add the kmer to the index for every node in the path.
-                    for i in range(path_len):
-                        self.nodes.append(self.path_buffer[i])
-                        self.kmers.append(kmer_hash)
+                    if self.graph.save_results:
+                        # Combine the main buffer and extended buffer to form the final kmer.
+                        kmer_hash = np.bitwise_or(np.left_shift(self.kmer_buffer,
+                                                                np.uint64(kmer_ext_len * 2)),
+                                                  np.right_shift(self.kmer_buffer_ext,
+                                                                 np.uint64(64 - kmer_ext_len * 2)))
+                        kmer_hash = np.bitwise_and(kmer_hash, self.kmer_mask)
+                        # Add the kmer to the index for every node in the path.
+                        for i in range(path_len):
+                            self.nodes.append(self.path_buffer[i])
+                            self.kmers.append(kmer_hash)
             else:
                 kmer_ext_len = sequence_len
                 
@@ -125,10 +126,11 @@ class GraphKmerFinder:
             kmer_len -= 1
             while kmer_len < sequence_len:
                 kmer_len += 1
-                self.nodes.append(node_id)
-                self.kmers.append(np.bitwise_and(np.right_shift(self.kmer_buffer,
-                                                                np.uint64(64 - (kmer_len * 2))),
-                                                 self.kmer_mask))
+                if self.graph.save_results:
+                    self.nodes.append(node_id)
+                    self.kmers.append(np.bitwise_and(np.right_shift(self.kmer_buffer,
+                                                                    np.uint64(64 - (kmer_len * 2))),
+                                                     self.kmer_mask))
                 # Check if the buffer is full, and if so, shift values along as much as k allows
                 if kmer_len == 31 and subsequence_idx < node.num_subsequences:
                     self.kmer_buffer = np.left_shift(self.kmer_buffer, self.shift)
@@ -171,6 +173,7 @@ class Graph:
 
     def __init__(self):
         self.nodes = []
+        self.save_results = True
 
     @staticmethod
     def from_obgraph(obg):

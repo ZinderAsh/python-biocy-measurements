@@ -6,6 +6,14 @@ class Node:
         self.edges = np.array(edges, dtype=np.int32)
         self.reference = False
 
+    @staticmethod
+    def from_obgraph(node, sequence, edges, encoding="ACGT"):
+        char_sequence = ""
+        for i in sequence:
+            char_sequence += encoding[i]
+        edges = np.array(edges, dtype=np.int32)
+        return Node(char_sequence, edges)
+
 class GraphKmerFinder:
 
     def __init__(self, graph, k, max_variant_nodes):
@@ -45,7 +53,7 @@ class GraphKmerFinder:
                 self.kmer_buffer[0:kmer_len] = self.kmer_buffer[1:kmer_len+1]
             else:
                 kmer_len += 1
-            if kmer_len >= self.k:
+            if kmer_len >= self.k and self.graph.save_results:
                 # full kmer collected, add to result
                 kmer = hash_kmer(self.kmer_buffer[(kmer_len-self.k):kmer_len], self.k)
                 for i in range(path_len):
@@ -71,6 +79,7 @@ class Graph:
 
     def __init__(self):
         self.nodes = []
+        self.save_results = True
 
     @staticmethod
     def from_sequence_edge_lists(sequences, edges, ref=None):
@@ -93,6 +102,16 @@ class Graph:
                 node.reference = True
         return graph
 
+    @staticmethod
+    def from_obgraph(obg):
+        graph = Graph()
+        for i in range(len(obg.nodes)):
+            node = Node.from_obgraph(obg.nodes[i], obg.sequences[i], obg.edges[i])
+            graph.nodes.append(node)
+        ref = obg.linear_ref_nodes()
+        for i in ref:
+            graph.nodes[i].reference = True
+        return graph
 
     def create_kmer_index(self, k, max_variant_nodes=4):
         kmers, nodes = GraphKmerFinder(self, k, max_variant_nodes).find()

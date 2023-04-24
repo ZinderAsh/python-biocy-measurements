@@ -1,12 +1,31 @@
+import numpy as np
+
 class Node:
     def __init__(self, sequence, edges):
         self.sequence = sequence
         self.edges = edges
 
+    @staticmethod
+    def from_obgraph(node, sequence, edges, encoding="ACGT"):
+        char_sequence = ""
+        for i in sequence:
+            char_sequence += encoding[i]
+        edges = np.array(edges, dtype=np.int32)
+        return Node(char_sequence, edges)
+
 class Graph:
 
     def __init__(self):
         self.nodes = []
+        self.save_results = True
+
+    @staticmethod
+    def from_obgraph(obg):
+        graph = Graph()
+        for i in range(len(obg.nodes)):
+            node = Node.from_obgraph(obg.nodes[i], obg.sequences[i], obg.edges[i])
+            graph.nodes.append(node)
+        return graph
 
     @staticmethod
     def from_sequence_edge_lists(sequences, edges):
@@ -27,7 +46,7 @@ class Graph:
         for base in self.nodes[node_id].sequence:
             kmer_buf += base
             kmer_len += 1
-            if kmer_len >= k:
+            if kmer_len >= k and self.save_results:
                 kmer = kmer_buf[(kmer_len-k):kmer_len].encode('ASCII')
                 if kmer not in index:
                     index[kmer] = []
