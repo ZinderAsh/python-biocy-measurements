@@ -31,8 +31,8 @@ test-odgi: odgi data/yeast.og
 	@/usr/bin/time -f "6\t%U\t%S\t%M" ./odgi kmers -i data/yeast.og -k 31 -t 1 > /dev/null
 	@/usr/bin/time -f "7\t%U\t%S\t%M" ./odgi kmers -i data/yeast.og -k 31 -t 1 > /dev/null
 
-test-biocy: data/yeast.bcg
-	@echo "Testing runtime for biocy"
+test-kivs: data/yeast.bcg
+	@echo "Testing runtime for KIVS"
 	@printf "Run\tCPU\tSYS\tMEM (kb)\n"
 	@/usr/bin/time -f "1\t%U\t%S\t%M" python test_kmer_index_speed.py data/yeast.bcg > /dev/null
 	@/usr/bin/time -f "2\t%U\t%S\t%M" python test_kmer_index_speed.py data/yeast.bcg > /dev/null

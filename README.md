@@ -17,7 +17,7 @@ For runtime measurements of the Python prototypes, run:
 ```bash
 python test_python_speed.py
 ```
-The results are in milliseconds.
+Results are in milliseconds.
 
 ### Compare Single Element Operations in Python Lists and NumPy Arrays
 
@@ -25,6 +25,7 @@ To get runtimes for setting the value of 100 million individual elements with a 
 ```bash
 python python_vs_numpy.py
 ```
+Results are in milliseconds.
 
 ### Compare Map Encoding to Bit-Operation Encoding
 
@@ -44,4 +45,13 @@ To get runtime measurements run:
 make test-graph-hash
 ```
 
-### 
+### K-mer Finding Performance
+
+These tests include the performance of both [vg](https://github.com/vgteam/vg) and [odgi](https://github.com/pangenome/odgi). Executables for these need to be downloaded and put into the root directory of this project, as files named `vg` and `odgi`. To run the tests do:
+```bash
+
+```
+
+### Variant Signature Performance and Accuracy
+
+
