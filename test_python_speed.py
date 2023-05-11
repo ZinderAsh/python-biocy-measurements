@@ -15,9 +15,9 @@ from timeit import timeit
 
 def measure_time_for_class(obgraph, GraphClass, k):
     graph = GraphClass.from_obgraph(obgraph)
-    graph.save_results = False
+    #graph.save_results = False
     durations = []
-    runs = 3
+    runs = 7
     for i in range(runs):
         print("Run", i + 1, "of", runs)
         duration = timeit(lambda: graph.create_kmer_index(k), number=1)
@@ -27,14 +27,14 @@ def measure_time_for_class(obgraph, GraphClass, k):
 graph_classes = [
         (Graph_v1, "Initial Prototype"),
         (Graph_v2, "Numpy Arrays"),
-        (Graph_v3, "Replace Break with Return"),
-        (Graph_v4, "Added Reference Property"),
+        #(Graph_v3, "Replace Break with Return"),
+        #(Graph_v4, "Added Reference Property"),
         (Graph_v5, "Numpy Array Slicing"),
-        (Graph_v6, "Empty Node Support"),
+        #(Graph_v6, "Empty Node Support"),
         (Graph_v7, "2-Bit Encode Graph")
 ]
 
-obgraph = OBGraph.from_file("data/small_graph.npz")
+obgraph = OBGraph.from_file("data/smaller_graph.npz")
 for i in range(len(graph_classes)):
     durations = measure_time_for_class(obgraph, graph_classes[i][0], 31)
     print(graph_classes[i][1], sorted(durations))
