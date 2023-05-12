@@ -65,18 +65,18 @@ make test-kivs-full
 
 ### Variant Signature Performance and Accuracy
 
-These tests require [kage-indexing](https://github.com/ivargr/kage-indexing) to be properly set up, and for KIVS to be installed in its conda environment. Further, the yeast dataset needs to be put into the `local_data` directory in kage-indexing. These can be found at [zenodo](https://zenodo.org/record/7928778).
+These tests require [kage-indexing](https://github.com/ivargr/kage-indexing) to be properly set up, and for KIVS to be installed in its conda environment. Further, the yeast dataset needs to be put into the `local_data` directory in kage-indexing. These can be found at [zenodo](https://zenodo.org/record/7929047).
 For runtime tests, run these commands in the kage-indexing directory:
 ```bash
 # KAGE implementation
-snakemake --use_conda --config max_variant_nodes=3 k_threads_kmer_index=1 --cores 1 test_yeast_full
-snakemake --use_conda --config max_variant_nodes=3 k_threads_kmer_index=16 --cores 1 test_yeast_full
-snakemake --use_conda --config max_variant_nodes=3 k_threads_kmer_index=1 --cores 1 test_yeast_full
-snakemake --use_conda --config max_variant_nodes=10 k_threads_kmer_index=16 --cores 1 test_yeast_full
+snakemake --use-conda --config max_variant_nodes=3 k_threads_kmer_index=1 --cores 1 test_yeast_full
+snakemake --use-conda --config max_variant_nodes=3 k_threads_kmer_index=16 --cores 1 test_yeast_full
+snakemake --use-conda --config max_variant_nodes=3 k_threads_kmer_index=1 --cores 1 test_yeast_full
+snakemake --use-conda --config max_variant_nodes=10 k_threads_kmer_index=16 --cores 1 test_yeast_full
 
 # KIVS implementation
-snakemake --use_conda --config max_variant_nodes=3 use_kivs=True kivs_minimize_overlaps=True kivs_align_windows=True --cores 1 test
-snakemake --use_conda --config max_variant_nodes=10 use_kivs=True kivs_minimize_overlaps=True kivs_align_windows=True --cores 1 test
+snakemake --use-conda --config max_variant_nodes=3 use_kivs=True kivs_minimize_overlaps=True kivs_align_windows=True --cores 1 test_yeast_full
+snakemake --use-conda --config max_variant_nodes=10 use_kivs=True kivs_minimize_overlaps=True kivs_align_windows=True --cores 1 test_yeast_full
 ```
 After each command, the relevant runtime can be found in `data/yeast_whole_genome/benchmarks/get_variant_kmers.tsv`
 
