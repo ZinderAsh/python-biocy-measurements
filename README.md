@@ -52,9 +52,39 @@ make test-graph-hash
 
 These tests include the performance of both [vg](https://github.com/vgteam/vg) and [odgi](https://github.com/pangenome/odgi). Executables for these need to be downloaded and put into the root directory of this project, as files named `vg` and `odgi`. To run the tests do:
 ```bash
+# All tests
+make test
 
+# Single tests
+make test-vg
+make test-odgi
+make test-kivs
+make test-kivs-stdout
+make test-kivs-full
 ```
 
 ### Variant Signature Performance and Accuracy
 
+These tests require [kage-indexing](https://github.com/ivargr/kage-indexing) to be properly set up, and for KIVS to be installed in its conda environment. Further, the yeast dataset needs to be put into the `local_data` directory in kage-indexing. These can be found at [zenodo](https://zenodo.org/record/7928778).
+For runtime tests, run these commands in the kage-indexing directory:
+```bash
+# KAGE implementation
+snakemake --use_conda --config max_variant_nodes=3 k_threads_kmer_index=1 --cores 1 test_yeast_full
+snakemake --use_conda --config max_variant_nodes=3 k_threads_kmer_index=16 --cores 1 test_yeast_full
+snakemake --use_conda --config max_variant_nodes=3 k_threads_kmer_index=1 --cores 1 test_yeast_full
+snakemake --use_conda --config max_variant_nodes=10 k_threads_kmer_index=16 --cores 1 test_yeast_full
 
+# KIVS implementation
+snakemake --use_conda --config max_variant_nodes=3 use_kivs=True kivs_minimize_overlaps=True kivs_align_windows=True --cores 1 test
+snakemake --use_conda --config max_variant_nodes=10 use_kivs=True kivs_minimize_overlaps=True kivs_align_windows=True --cores 1 test
+```
+After each command, the relevant runtime can be found in `data/yeast_whole_genome/benchmarks/get_variant_kmers.tsv`
+
+For accuracy tests, first copy `kivs_accuracy_test.sh` and `kivs_accuracy_yeast.sh` from python-kivs-benchmarking to the kage-indexing root directory. These automate the process for accuracy tests for all rows included in the accuracy tables. To run the tests, then do:
+```bash
+# For a subset of human chromosome 1
+./kivs_accuracy_test.sh
+
+# For the whole yeast genome
+./kivs_accuracy_yeast.sh
+```
