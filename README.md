@@ -65,7 +65,7 @@ make test-kivs-full
 
 ### Variant Signature Performance and Accuracy
 
-These tests require [kage-indexing](https://github.com/ivargr/kage-indexing) to be properly set up, and for KIVS to be installed in its conda environment. Further, the yeast dataset needs to be put into the `local_data` directory in kage-indexing. These can be found at [zenodo](https://zenodo.org/record/7929047).
+These tests require [kage-indexing](https://github.com/ivargr/kage-indexing) to be properly set up, and for KIVS to be installed in its conda environment. Further, the yeast dataset needs to be put into the `local_data` directory in kage-indexing. These can be found at [zenodo](https://zenodo.org/record/7929047). Mind that the yeast tests require a large amount of available memory and take a good while to complete.
 For runtime tests, run these commands in the kage-indexing directory:
 ```bash
 # KAGE implementation
