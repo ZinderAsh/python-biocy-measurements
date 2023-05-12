@@ -1,5 +1,5 @@
 
-test: test-vg test-odgi test-kivs
+test: test-vg test-odgi test-kivs test-kivs-stdout test-kivs-full
 
 test-vg: vg data/yeast.vg
 	@echo "Testing runtime for vg"
@@ -35,7 +35,7 @@ test-kivs: data/yeast.kivs
 	@/usr/bin/time -f "7\t%U\t%S\t%M" python test_kmer_index_speed.py data/yeast.kivs > /dev/null
 
 test-kivs-stdout: data/yeast.kivs
-	@echo "Testing runtime for KIVS"
+	@echo "Testing runtime for KIVS writing to stdout"
 	@printf "Run\tCPU\tSYS\tMEM (kb)\n"
 	@/usr/bin/time -f "1\t%U\t%S\t%M" python test_kmer_index_speed.py data/yeast.kivs stdout > /dev/null
 	@/usr/bin/time -f "2\t%U\t%S\t%M" python test_kmer_index_speed.py data/yeast.kivs stdout > /dev/null
@@ -46,7 +46,7 @@ test-kivs-stdout: data/yeast.kivs
 	@/usr/bin/time -f "7\t%U\t%S\t%M" python test_kmer_index_speed.py data/yeast.kivs stdout > /dev/null
 
 test-kivs-full: data/yeast.kivs
-	@echo "Testing runtime for KIVS"
+	@echo "Testing runtime for full KIVS (include spanning nodes)"
 	@printf "Run\tCPU\tSYS\tMEM (kb)\n"
 	@/usr/bin/time -f "1\t%U\t%S\t%M" python test_kmer_index_speed.py data/yeast.kivs full > /dev/null
 	@/usr/bin/time -f "2\t%U\t%S\t%M" python test_kmer_index_speed.py data/yeast.kivs full > /dev/null
