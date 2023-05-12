@@ -1,9 +1,9 @@
-from biocy import Graph, KmerFinder
+from kivs import Graph, KmerFinder
 import sys
 
 if len(sys.argv) != 3:
     print("Usage:")
-    print("python gfa_to_bcg.py filepath.gfa filepath.bcg")
+    print("python gfa_to_bcg.py filepath.gfa filepath.kivs")
     exit(1)
 
 graph = Graph.from_gfa(sys.argv[1])

@@ -1,11 +1,5 @@
 CXX=g++
 CFLAGS=-Wall -Wextra -lm
-CBUILDDIR=build/src
-CPROGRAMDIR=build
-CTESTDIR=tests
-CSRCDIR=biocy/cpp
-COBJECTS=$(CBUILDDIR)/Graph.o $(CBUILDDIR)/hashing.o $(CBUILDDIR)/KmerFinder.o $(CBUILDDIR)/GFA.o $(CBUILDDIR)/VCF.o
-CHEADERS=$(CSRCDIR)/node.hpp $(CSRCDIR)/doctest.h
 
 all: encode_graph kmers_ascii kmers_encoded kmers_ascii_bit_operation
 

@@ -1,11 +1,3 @@
-CXX=g++
-CFLAGS=-Wall -Wextra -lm
-CBUILDDIR=build/src
-CPROGRAMDIR=build
-CTESTDIR=tests
-CSRCDIR=biocy/cpp
-COBJECTS=$(CBUILDDIR)/Graph.o $(CBUILDDIR)/hashing.o $(CBUILDDIR)/KmerFinder.o $(CBUILDDIR)/GFA.o $(CBUILDDIR)/VCF.o
-CHEADERS=$(CSRCDIR)/node.hpp $(CSRCDIR)/doctest.h
 
 test: test-vg test-odgi test-kivs
 

@@ -1,4 +1,4 @@
-from biocy import Graph, KmerFinder
+from kivs import Graph, KmerFinder
 from obgraph import Graph as OBGraph
 #from graph_kmer_index import kmer_hash_to_sequence
 from graph_kmer_index.kmer_finder import DenseKmerFinder

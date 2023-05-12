@@ -1,4 +1,4 @@
-#from biocy import Graph, KmerFinder, hash_kmer
+#from kivs import Graph, KmerFinder, hash_kmer
 from python_v1.Graph import Graph as Graph_v1
 from python_v2.Graph import Graph as Graph_v2
 from python_v3.Graph import Graph as Graph_v3
