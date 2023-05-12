@@ -69,14 +69,14 @@ These tests require [kage-indexing](https://github.com/ivargr/kage-indexing) to 
 For runtime tests, run these commands in the kage-indexing directory:
 ```bash
 # KAGE implementation
-snakemake --use-conda --config max_variant_nodes=3 k_threads_kmer_index=1 --cores 1 test_yeast_full
-snakemake --use-conda --config max_variant_nodes=3 k_threads_kmer_index=16 --cores 1 test_yeast_full
-snakemake --use-conda --config max_variant_nodes=3 k_threads_kmer_index=1 --cores 1 test_yeast_full
-snakemake --use-conda --config max_variant_nodes=10 k_threads_kmer_index=16 --cores 1 test_yeast_full
+snakemake --use-conda --config max_variant_nodes=3 k_threads_kmer_index=1 --cores 1 --forceall test_yeast_full
+snakemake --use-conda --config max_variant_nodes=3 k_threads_kmer_index=16 --cores 1 --forceall test_yeast_full
+snakemake --use-conda --config max_variant_nodes=3 k_threads_kmer_index=1 --cores 1 --forceall test_yeast_full
+snakemake --use-conda --config max_variant_nodes=10 k_threads_kmer_index=16 --cores 1 --forceall test_yeast_full
 
 # KIVS implementation
-snakemake --use-conda --config max_variant_nodes=3 use_kivs=True kivs_minimize_overlaps=True kivs_align_windows=True --cores 1 test_yeast_full
-snakemake --use-conda --config max_variant_nodes=10 use_kivs=True kivs_minimize_overlaps=True kivs_align_windows=True --cores 1 test_yeast_full
+snakemake --use-conda --config max_variant_nodes=3 use_kivs=True kivs_minimize_overlaps=True kivs_align_windows=True --cores 1 --forceall test_yeast_full
+snakemake --use-conda --config max_variant_nodes=10 use_kivs=True kivs_minimize_overlaps=True kivs_align_windows=True --cores 1 --forceall test_yeast_full
 ```
 After each command, the relevant runtime can be found in `data/yeast_whole_genome/benchmarks/get_variant_kmers.tsv`
 
