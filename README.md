@@ -6,8 +6,11 @@ Benchmarking for KIVS, a master's thesis project about discovering and indexing 
 
 This project aims to create a high-performance cython-based python module for creating genome graphs and discovering/indexing the k-mers within the graph.
 
+## Requirements
+
 For requirements and setup, see the [KIVS repository](https://github.com/ZinderAsh/python-kivs).
 Some tests require the setup if [kage-indexing](https://github.com/ivargr/kage-indexing) as well.
+The `time` command is required for some tests.
 
 ## Reproducing Thesis Benchmarks
 
